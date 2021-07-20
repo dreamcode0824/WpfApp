@@ -1,0 +1,327 @@
+﻿<dx:ThemedWindow xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:dxca="http://schemas.devexpress.com/winfx/2008/xaml/carousel" 
+    xmlns:dxre="http://schemas.devexpress.com/winfx/2008/xaml/richedit" 
+    xmlns:dxsps="http://schemas.devexpress.com/winfx/2008/xaml/spreadsheet" 
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui" 
+    xmlns:local="clr-namespace:WpfApp1" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" 
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"  
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+    xmlns:dxspch="http://schemas.devexpress.com/winfx/2008/xaml/spellchecker"  
+    x:Class="WpfApp1.MainWindow" 
+    Width="800" Height="450" mc:Ignorable="d" Title="WPF Rich Text Editor" WindowState="Maximized" 
+>
+
+    <Grid>
+        <dxwui:HamburgerMenu>
+            <dxwui:HamburgerMenu.Content>
+                <Grid>
+                    <!--region #RichEditSpellCheckerBehavior-->
+                    <dxre:RichEditControl x:Name="richedit" DocumentSource="An ideal dictionarie shouldbe comprised of all the the words in a given langauge">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxspch:RichEditSpellChecker CheckAsYouType="True"
+                                             Culture="en-US"
+                                             IgnoreMixedCaseWords="False"
+                                             IgnoreUri="False"
+                                             SpellingFormType="Word">
+                                <dxspch:RichEditSpellChecker.Dictionaries>
+                                    <dxspch:HunspellDictionary Culture="en-US" 
+                                                   DictionaryUri="pack://application:,,,/Dictionaries/en_US.dic"
+                                                   GrammarUri="pack://application:,,,/Dictionaries/en_US.aff"/>
+                                    <dxspch:SpellCheckerCustomDictionary Culture="en-US"
+                                                             DictionaryUri="Dictionaries/CustomEnglish.dic"
+                                                             AlphabetUri="Dictionaries/EnglishAlphabet.txt"/>
+                                </dxspch:RichEditSpellChecker.Dictionaries>
+                            </dxspch:RichEditSpellChecker>
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxre:RichEditControl>
+                    <!--endregion #RichEditSpellCheckerBehavior-->
+                    <dxsps:SpreadsheetControl x:Name="spreadsheet" CommandBarStyle="Ribbon" Visibility="Hidden" />
+                    <StackPanel x:Name="welcome" Visibility="Hidden" Background="White">
+                        <Label Content="Welcome !" Foreground="Black" FontSize="30" FontWeight="Bold" />
+                    </StackPanel>
+                    <StackPanel x:Name="profile" Visibility="Hidden" Background="White">
+                        <Label Content="This is Profile page" Foreground="Black" FontSize="30" FontWeight="Bold" />
+                    </StackPanel>
+                    <StackPanel x:Name="document" Visibility="Hidden" Background="WhiteSmoke">
+                        <Label Content="Creaete Document" Foreground="Black" FontSize="30" FontWeight="Bold" Padding="20" />
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="294" Width="auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Keyword *"/>
+                                    <TextBox x:Name="textBox1" dx:ThemeManager.ThemeName="MetropolisLight" Width="120" Height="23"/>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="1" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Name *"/>
+                                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <TextBox.Style>
+                                            <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                                <Style.Resources>
+                                                    <Style TargetType="{x:Type Border}">
+                                                        <Setter Property="CornerRadius" Value="3" />
+                                                    </Style>
+                                                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <Label Content="Name" Foreground="LightGray" />
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="Text" Value="{x:Null}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                        <Setter Property="Background" Value="White" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Status *"/>
+                                    <ComboBox ItemsSource="{Binding MyList}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <ComboBox.Template>
+                                            <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                <Grid>
+                                                    <ComboBox x:Name="cbItems" 
+                                                        DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        SelectedValue ="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        Background="White"
+                                                    />
+                                                    <TextBlock x:Name="tbItem" Text="Done" IsHitTestVisible="False" Visibility="Hidden" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger SourceName="cbItems" Property="SelectedItem" Value="{x:Null}">
+                                                        <Setter TargetName="tbItem" Property="Visibility" Value="Visible"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </ComboBox.Template>
+                                    </ComboBox>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="3" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Importance *"/>
+                                    <ComboBox ItemsSource="{Binding MyList}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <ComboBox.Template>
+                                            <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                <Grid>
+                                                    <ComboBox x:Name="cbItems" 
+                                                        DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        SelectedValue ="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        Background="White"
+                                                    />
+                                                    <TextBlock x:Name="tbItem" Text="Select Importance" IsHitTestVisible="False" Visibility="Hidden" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger SourceName="cbItems" Property="SelectedItem" Value="{x:Null}">
+                                                        <Setter TargetName="tbItem" Property="Visibility" Value="Visible"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </ComboBox.Template>
+                                    </ComboBox>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel x:Name="archive" Visibility="Hidden" Background="WhiteSmoke">
+                        <Label Content="Creaete Archive" Foreground="Black" FontSize="30" FontWeight="Bold" Padding="20" />
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="294" Width="auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Keyword *"/>
+                                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <TextBox.Style>
+                                            <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                                <Style.Resources>
+                                                    <Style TargetType="{x:Type Border}">
+                                                        <Setter Property="CornerRadius" Value="3" />
+                                                    </Style>
+                                                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <Label Content="Keyword" Foreground="LightGray" />
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="Text" Value="{x:Null}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                        <Setter Property="Background" Value="White" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="1" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Name *"/>
+                                    <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <TextBox.Style>
+                                            <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                                <Style.Resources>
+                                                    <Style TargetType="{x:Type Border}">
+                                                        <Setter Property="CornerRadius" Value="3" />
+                                                    </Style>
+                                                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <Label Content="Name" Foreground="LightGray" />
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="Text" Value="{x:Null}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                        <Setter Property="Background" Value="White" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Status *"/>
+                                    <ComboBox ItemsSource="{Binding MyList}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <ComboBox.Template>
+                                            <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                <Grid>
+                                                    <ComboBox x:Name="cbItems" 
+                                                        DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        SelectedValue ="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        Background="White"
+                                                    />
+                                                    <TextBlock x:Name="tbItem" Text="Done" IsHitTestVisible="False" Visibility="Hidden" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger SourceName="cbItems" Property="SelectedItem" Value="{x:Null}">
+                                                        <Setter TargetName="tbItem" Property="Visibility" Value="Visible"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </ComboBox.Template>
+                                    </ComboBox>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="3" Grid.Column="0" Background="White">
+                                <WrapPanel Orientation="Vertical" Margin="10">
+                                    <Label FontWeight="Bold" Foreground="Black" Content="Importance *"/>
+                                    <ComboBox ItemsSource="{Binding MyList}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" Width="275">
+                                        <ComboBox.Template>
+                                            <ControlTemplate TargetType="{x:Type ComboBox}">
+                                                <Grid>
+                                                    <ComboBox x:Name="cbItems" 
+                                                        DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        SelectedValue ="{Binding SelectedValue, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                        Background="White"
+                                                    />
+                                                    <TextBlock x:Name="tbItem" Text="Select Importance" IsHitTestVisible="False" Visibility="Hidden" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger SourceName="cbItems" Property="SelectedItem" Value="{x:Null}">
+                                                        <Setter TargetName="tbItem" Property="Visibility" Value="Visible"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </ComboBox.Template>
+                                    </ComboBox>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel x:Name="email" Visibility="Hidden" Background="White"/>
+                    <StackPanel x:Name="department" Visibility="Hidden" Background="White">
+                        <Label Content="This is Department page" Foreground="Black" FontSize="30" FontWeight="Bold" />
+                    </StackPanel>
+                    <StackPanel x:Name="roles" Visibility="Hidden" Background="White">
+                        <Label Content="This is Roles page" Foreground="Black" FontSize="30" FontWeight="Bold" />
+                    </StackPanel>
+                    <StackPanel x:Name="users" Visibility="Hidden" Background="White">
+                        <Label Content="This is Users page" Foreground="Black" FontSize="30" FontWeight="Bold" />
+                    </StackPanel>
+                    <StackPanel x:Name="templates" Visibility="Hidden" Background="White">
+                        <Label Content="This is Templates page" Foreground="Black" FontSize="30" FontWeight="Bold" />
+                    </StackPanel>
+                </Grid>
+            </dxwui:HamburgerMenu.Content>
+            <dxwui:HamburgerMenuItemSeparator />
+            <dxwui:HamburgerMenuNavigationButton x:Name="Profile" Content="Admin" Glyph="user.jpg" GlyphHeight="30" GlyphWidth="30" GlyphStretch="Uniform" Click="Profile_Click" FontSize="22" Height="50" Margin="0" />
+            <dxwui:HamburgerMenuItemSeparator />
+            <dxwui:HamburgerMenuNavigationButton x:Name="Archive" Content="Archive" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Database.svg}" GlyphHeight="24" GlyphWidth="24" IsEnabled="True" Click="Archive_Click" />
+            <dxwui:HamburgerMenuNavigationButton x:Name="Documents" Content="Documents" Glyph="{dx:DXImage Images/XAF/Action_Document_Object_Inplace_32x32.png}" GlyphHeight="24" GlyphWidth="24" Click="Documents_Click" />
+            <dxwui:HamburgerMenuNavigationButton x:Name="Email" Content="Email" Glyph="{dx:DXImage Images/Mail/Mail_32x32.png}" GlyphHeight="24" GlyphWidth="24" Click="Email_Click" />
+            <dxwui:HamburgerSubMenu Content="Settings" Glyph="{dx:DXImage Office2013/Setup/Properties_16x16.png}" MoreButtonVisibilityMode="Hidden">
+                <dxwui:HamburgerSubMenuNavigationButton x:Name="Department" Content="Department" Click="Department_Click" />
+                <dxwui:HamburgerSubMenuNavigationButton x:Name="Roles" Content="Roles" Click="Roles_Click" />
+                <dxwui:HamburgerSubMenuNavigationButton x:Name="Users" Content="Users" Click="Users_Click" />
+                <dxwui:HamburgerSubMenuNavigationButton x:Name="Templates" Content="Templates" Click="Templates_Click" />
+            </dxwui:HamburgerSubMenu>
+        </dxwui:HamburgerMenu>
+    </Grid>
+
+</dx:ThemedWindow>
